@@ -25,7 +25,7 @@ const publicRoutes = [
   {
     path: '/purchase-requisition',
     component: Requisition,
-    title: 'Purchuase Requisition',
+    title: 'Purchase Requisition',
     icon: '/images/icons/purchase-requisition.svg',
   },
 ];

@@ -12,7 +12,7 @@ function Sidebar() {
         </div>
       </div>
       <div className="mx-6 line"></div>
-      <div className="flex flex-col pt-4">
+      <div className="flex flex-col gap-2 pt-4">
         {publicRoutes.map((route, index) => {
           return (
             <NavLink
