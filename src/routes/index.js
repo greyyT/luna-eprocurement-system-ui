@@ -9,24 +9,24 @@ import Order from '~/pages/Purchase/Order';
 import Requisition from '~/pages/Purchase/Requisition';
 
 const publicRoutes = [
-  { path: '/', component: Accounts, title: 'Accounts', icon: '/images/icons/user.svg' },
-  { path: '/legal-entity', component: LegalEntity, title: 'Legal Entity', icon: '/images/icons/legal-entity.svg' },
-  { path: '/product', component: Product, title: 'Product', icon: 'images/icons/product.svg' },
-  { path: '/project', component: Project, title: 'Project', icon: '/images/icons/project.svg' },
-  { path: '/reports', component: Reports, title: 'Reports', icon: '/images/icons/reports.svg' },
-  { path: '/vendor', component: Vendor, title: 'Vendor', icon: '/images/icons/vendor.svg' },
+  { path: '/', component: Accounts, title: 'Accounts', icon: './images/icons/user.svg' },
+  { path: '/legal-entity', component: LegalEntity, title: 'Legal Entity', icon: './images/icons/legal-entity.svg' },
+  { path: '/product', component: Product, title: 'Product', icon: './images/icons/product.svg' },
+  { path: '/project', component: Project, title: 'Project', icon: './images/icons/project.svg' },
+  { path: '/reports', component: Reports, title: 'Reports', icon: './images/icons/reports.svg' },
+  { path: '/vendor', component: Vendor, title: 'Vendor', icon: './images/icons/vendor.svg' },
   {
     path: '/purchase-invoice',
     component: Invoice,
     title: 'Purchase Invoice',
-    icon: '/images/icons/purchase-invoice.svg',
+    icon: './images/icons/purchase-invoice.svg',
   },
-  { path: '/purchase-order', component: Order, title: 'Purchase Order', icon: '/images/icons/purchase-order.svg' },
+  { path: '/purchase-order', component: Order, title: 'Purchase Order', icon: './images/icons/purchase-order.svg' },
   {
     path: '/purchase-requisition',
     component: Requisition,
     title: 'Purchase Requisition',
-    icon: '/images/icons/purchase-requisition.svg',
+    icon: './images/icons/purchase-requisition.svg',
   },
 ];
 
