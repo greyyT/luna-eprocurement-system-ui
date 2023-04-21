@@ -7,7 +7,7 @@ function Sidebar() {
       <div className="flex items-center p-4">
         <img src="/images/icons/lunar-client.png" className="w-20" alt="" />
         <div className="font-bold text-2xl text-primary">
-          <h1>Lunar</h1>
+          <h1>Luna</h1>
           <h1>eProcurement</h1>
         </div>
       </div>
