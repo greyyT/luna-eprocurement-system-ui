@@ -8,7 +8,7 @@ import Invoice from '~/pages/Purchase/Invoice';
 import Order from '~/pages/Purchase/Order';
 import Requisition from '~/pages/Purchase/Requisition';
 
-const publicRoutes = [
+const privateRoutes = [
   { path: '/', component: Accounts, title: 'Accounts', icon: './images/icons/user.svg' },
   { path: '/legal-entity', component: LegalEntity, title: 'Legal Entity', icon: './images/icons/legal-entity.svg' },
   { path: '/product', component: Product, title: 'Product', icon: './images/icons/product.svg' },
@@ -30,6 +30,6 @@ const publicRoutes = [
   },
 ];
 
-const privateRoutes = [];
+const publicRoutes = [];
 
-export { publicRoutes, privateRoutes };
+export { privateRoutes, publicRoutes };
