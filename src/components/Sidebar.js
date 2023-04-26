@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { publicRoutes } from '~/routes';
+import { privateRoutes } from '~/routes';
 
 function Sidebar() {
   return (
@@ -13,7 +13,7 @@ function Sidebar() {
       </div>
       <div className="mx-6 line"></div>
       <div className="flex flex-col gap-2 pt-4">
-        {publicRoutes.map((route, index) => {
+        {privateRoutes.map((route, index) => {
           return (
             <NavLink
               className={({ isActive }) =>
