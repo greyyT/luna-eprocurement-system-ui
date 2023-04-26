@@ -5,7 +5,7 @@ function DefaultLayout({ children }) {
     <div>
       <Sidebar />
       <main className="pl-80">
-        <div className="">{children}</div>
+        <div>{children}</div>
       </main>
     </div>
   );
