@@ -5,9 +5,11 @@ module.exports = {
     extend: {
       fontFamily: {
         montserrat: ['Montserrat'],
+        inter: ['Inter'],
       },
       colors: {
         primary: '#843fff',
+        warn: '#FF0000',
       },
     },
   },
