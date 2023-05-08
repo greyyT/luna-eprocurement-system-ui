@@ -3,10 +3,14 @@ import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import handleInput from '~/utils/validator';
 import handleLogin from '~/utils/handleLogin';
+import PrimaryButton from '~/components/PrimaryButton';
 
 function SignIn({ setToken, setEntity }) {
+  // Set document title
+  document.title = 'Sign In';
+
   useEffect(() => {
-    setEntity(undefined);
+    setEntity({ state: false });
 
     // eslint-disable-next-line
   }, []);
@@ -37,8 +41,6 @@ function SignIn({ setToken, setEntity }) {
 
     // Log in case: only check email and password pass the pretreatment
     if (emailError === undefined && passwordError === undefined) {
-      console.log(email, password);
-
       // Go to handle login to check on call api
       const token = await handleLogin(email, password);
 
@@ -69,9 +71,7 @@ function SignIn({ setToken, setEntity }) {
           value={password}
           error={error.password}
         />
-        <button className="h-12 bg-primary mt-4 text-white font-inter rounded-md" onClick={handleSubmit}>
-          Sign in
-        </button>
+        <PrimaryButton onClick={handleSubmit}>Sign in</PrimaryButton>
       </div>
       <div className="flex justify-between text-zinc-400 font-inter mt-4 text-sm">
         <p className="cursor-pointer hover:underline hover:text-primary">Forget password</p>

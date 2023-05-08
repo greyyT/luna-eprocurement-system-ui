@@ -18,6 +18,13 @@ const validatorRules = {
       ? undefined
       : 'Invalid password (must be between 8 and 24 digits and have at least a number and an uppercase letter)';
   },
+  entityCode(value) {
+    // eslint-disable-next-line
+    const ENTITY_REGEX = /^[a-z0-9].{2,5}$/i;
+    return ENTITY_REGEX.test(value)
+      ? undefined
+      : 'Invalid Entity Code (must be in alphanumeric and between 3 and 6 digits)';
+  },
 };
 
 const handleInput = (value, ...rules) => {
