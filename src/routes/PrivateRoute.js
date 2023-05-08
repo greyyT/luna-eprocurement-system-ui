@@ -4,10 +4,10 @@ import useToken from '~/utils/useToken';
 function PrivateRoute({ children, entity }) {
   const token = useToken().token;
 
-  if (entity.state) {
-    return <Navigate to="/assign-entity" />;
-  } else if (!token) {
+  if (!token) {
     return <Navigate to="/sign-in" />;
+  } else if (entity.state) {
+    return <Navigate to="/assign-entity" />;
   }
 
   return children;

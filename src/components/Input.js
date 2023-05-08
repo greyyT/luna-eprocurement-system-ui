@@ -30,6 +30,7 @@ function Input({ id, onChange, value, label, type, error }) {
         htmlFor={id}
         className="
         absolute
+        cursor-text
         text-md
         text-zinc-400
         duration-150

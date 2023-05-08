@@ -4,8 +4,12 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import handleInput from '~/utils/validator';
 import handleSignUp from '~/utils/handleSignUp';
 import handleLogin from '~/utils/handleLogin';
+import PrimaryButton from '~/components/PrimaryButton';
 
 function SignUp({ setEntity }) {
+  // Set document title
+  document.title = 'Sign Up';
+
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
@@ -44,7 +48,7 @@ function SignUp({ setEntity }) {
 
         setEntity({ state: true, token });
 
-        navigate('/assign-entity');
+        navigate('/create-entity');
       }
     }
   };
@@ -79,9 +83,7 @@ function SignUp({ setEntity }) {
           value={password}
           error={error.password}
         />
-        <button className="h-12 bg-primary text-white font-inter rounded-md mt-4" onClick={handleSubmit}>
-          Sign up
-        </button>
+        <PrimaryButton onClick={handleSubmit}>Sign up</PrimaryButton>
       </div>
       <div className="flex justify-center text-zinc-400 font-inter mt-4 text-sm">
         <div className="">

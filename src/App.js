@@ -1,9 +1,10 @@
 // Deps
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { privateRoutes } from './routes';
-import { Navigate } from 'react-router-dom';
 import { useState } from 'react';
 import useToken from './utils/useToken';
+import PrivateRoute from './routes/PrivateRoute';
+import AuthRoute from './routes/AuthRoute';
 
 // Pages
 import SignIn from './pages/SignIn';
@@ -12,10 +13,12 @@ import SignUp from './pages/SignUp';
 // Layouts
 import DefaultLayout from './components/Layout/DefaultLayout';
 import AuthLayout from './components/Layout/AuthLayout';
-import AssignEntity from './pages/AssignEntity';
-import PrivateRoute from './routes/PrivateRoute';
+import CreateEntity from './pages/CreateEntity';
+import EntityLayout from './components/Layout/EntityLayout';
+import JoinEntity from './pages/JoinEntity';
 
 function App() {
+  // eslint-disable-next-line
   const { token, setToken } = useToken();
   const [entity, setEntity] = useState({ state: false, token: undefined });
 
@@ -26,26 +29,41 @@ function App() {
           <Route
             path="/sign-in"
             element={
-              token ? (
-                <Navigate to="/" />
-              ) : (
+              <AuthRoute>
                 <AuthLayout>
                   <SignIn setToken={setToken} setEntity={setEntity} />
                 </AuthLayout>
-              )
+              </AuthRoute>
             }
           />
-          <Route path="/assign-entity" element={<AssignEntity setToken={setToken} entity={entity} />} />
+          <Route
+            path="/create-entity"
+            element={
+              <AuthRoute>
+                <EntityLayout>
+                  <CreateEntity setToken={setToken} entity={entity} />
+                </EntityLayout>
+              </AuthRoute>
+            }
+          />
+          <Route
+            path="/join-entity"
+            element={
+              <AuthRoute>
+                <EntityLayout>
+                  <JoinEntity setToken={setToken} entity={entity} />
+                </EntityLayout>
+              </AuthRoute>
+            }
+          />
           <Route
             path="/sign-up"
             element={
-              token ? (
-                <Navigate to="/" />
-              ) : (
+              <AuthRoute>
                 <AuthLayout>
                   <SignUp setEntity={setEntity} />
                 </AuthLayout>
-              )
+              </AuthRoute>
             }
           />
           {privateRoutes.map((route, index) => {
