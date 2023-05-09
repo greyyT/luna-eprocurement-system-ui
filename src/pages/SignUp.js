@@ -3,10 +3,9 @@ import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import handleInput from '~/utils/validator';
 import handleSignUp from '~/utils/handleSignUp';
-import handleLogin from '~/utils/handleLogin';
 import PrimaryButton from '~/components/PrimaryButton';
 
-function SignUp({ setEntity }) {
+function SignUp() {
   // Set document title
   document.title = 'Sign Up';
 
@@ -41,13 +40,9 @@ function SignUp({ setEntity }) {
     // Log in case: only check email and password pass the pretreatment
     if (emailError === undefined && nameError === undefined && passwordError === undefined) {
       // Go to handle sign up to check on call api
-      const value = await handleSignUp(email, name, password);
+      const isSuccess = await handleSignUp(email, name, password, setError);
 
-      if (typeof value === 'object') {
-        const token = await handleLogin(email, password);
-
-        setEntity({ state: true, token });
-
+      if (isSuccess) {
         navigate('/create-entity');
       }
     }

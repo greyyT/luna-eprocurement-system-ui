@@ -1,16 +1,10 @@
 import { Navigate } from 'react-router-dom';
 import useToken from '~/utils/useToken';
 
-function PrivateRoute({ children, entity }) {
-  const token = useToken().token;
+function PrivateRoute({ children }) {
+  const { token } = useToken();
 
-  if (!token) {
-    return <Navigate to="/sign-in" />;
-  } else if (entity.state) {
-    return <Navigate to="/assign-entity" />;
-  }
-
-  return children;
+  return token ? children : <Navigate to="/sign-in" />;
 }
 
 export default PrivateRoute;

@@ -3,9 +3,11 @@ import handleInput from '~/utils/validator';
 import Input from '~/components/Input';
 import PrimaryButton from '~/components/PrimaryButton';
 
-function CreateEntity({ setToken, setEntity }) {
+function CreateEntity({ setToken, entity }) {
   // Set page title
   document.title = 'Create Entity';
+
+  console.log(entity);
 
   const [entityCode, setEntityCode] = useState('');
   const [bussinessNum, setBussinessNum] = useState('');

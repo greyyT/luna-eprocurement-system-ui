@@ -1,22 +1,33 @@
 import axios from '~/api/axios';
 
-const LOGIN_URL = '/auth';
+const LOGIN_URL = '/auth/login';
 
-const handleLogin = async (email, password) => {
+const handleLogin = async (email, password, setError) => {
   try {
     // Go to axios.js in src/api to change rest api link
     const res = await axios.post(LOGIN_URL, JSON.stringify({ email, password }), {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    return res.data;
+    if (res?.status === 200) {
+      return res.data;
+    }
   } catch (err) {
     if (!err?.res) {
-      throw new Error('No Server Response');
-    } else if (err.res?.status === 400) {
-      throw new Error('Missing username or password');
+      setError({
+        email: 'No server response',
+        password: 'No server response',
+      });
+    } else if (err.res?.status === 403) {
+      setError({
+        email: 'Invalid username or password',
+        password: 'Invalid username or password',
+      });
     } else {
-      throw new Error('Login fail');
+      setError({
+        email: 'Login failed',
+        password: 'Login failed',
+      });
     }
   }
 };

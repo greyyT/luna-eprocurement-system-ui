@@ -1,7 +1,6 @@
 // Deps
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { privateRoutes } from './routes';
-import { useState } from 'react';
 import useToken from './utils/useToken';
 import PrivateRoute from './routes/PrivateRoute';
 import AuthRoute from './routes/AuthRoute';
@@ -19,8 +18,7 @@ import JoinEntity from './pages/JoinEntity';
 
 function App() {
   // eslint-disable-next-line
-  const { token, setToken } = useToken();
-  const [entity, setEntity] = useState({ state: false, token: undefined });
+  const { setToken } = useToken();
 
   return (
     <Router>
@@ -31,7 +29,7 @@ function App() {
             element={
               <AuthRoute>
                 <AuthLayout>
-                  <SignIn setToken={setToken} setEntity={setEntity} />
+                  <SignIn setToken={setToken} />
                 </AuthLayout>
               </AuthRoute>
             }
@@ -41,7 +39,7 @@ function App() {
             element={
               <AuthRoute>
                 <EntityLayout>
-                  <CreateEntity setToken={setToken} entity={entity} />
+                  <CreateEntity setToken={setToken} />
                 </EntityLayout>
               </AuthRoute>
             }
@@ -51,7 +49,7 @@ function App() {
             element={
               <AuthRoute>
                 <EntityLayout>
-                  <JoinEntity setToken={setToken} entity={entity} />
+                  <JoinEntity setToken={setToken} />
                 </EntityLayout>
               </AuthRoute>
             }
@@ -61,7 +59,7 @@ function App() {
             element={
               <AuthRoute>
                 <AuthLayout>
-                  <SignUp setEntity={setEntity} />
+                  <SignUp />
                 </AuthLayout>
               </AuthRoute>
             }
@@ -74,7 +72,7 @@ function App() {
                 key={index}
                 path={route.path}
                 element={
-                  <PrivateRoute entity={entity}>
+                  <PrivateRoute>
                     <Layout>
                       <Page />
                     </Layout>
