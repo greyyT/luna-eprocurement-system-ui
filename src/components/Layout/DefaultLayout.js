@@ -4,7 +4,7 @@ function DefaultLayout({ children }) {
   return (
     <div>
       <Sidebar />
-      <main className="pl-80">
+      <main className="pl-80 h-screen bg-mainBg">
         <div>{children}</div>
       </main>
     </div>

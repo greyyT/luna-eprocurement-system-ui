@@ -6,6 +6,10 @@
   @apply font-montserrat;
 }
 
+.sidebar-shadow {
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.12);
+}
+
 .line {
   @apply border border-solid border-[#dadada] shadow-md shadow-black;
 }
