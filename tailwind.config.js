@@ -8,7 +8,7 @@ module.exports = {
         inter: ['Inter'],
       },
       colors: {
-        primary: '#843fff',
+        primary: '#3056D3',
         warn: '#FF0000',
       },
     },

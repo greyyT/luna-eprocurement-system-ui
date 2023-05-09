@@ -1,6 +1,6 @@
 import axios from '~/api/axios';
 
-const ACCOUNTS_URL = '/accounts';
+const ACCOUNTS_URL = '/auth/register';
 
 const handleSignUp = async (email, username, password) => {
   try {
@@ -9,7 +9,9 @@ const handleSignUp = async (email, username, password) => {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    return res.data;
+    if (res.status === 200) {
+      return true;
+    }
   } catch (err) {
     if (!err?.res) {
       throw new Error('No server response');

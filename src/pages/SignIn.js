@@ -5,15 +5,9 @@ import handleInput from '~/utils/validator';
 import handleLogin from '~/utils/handleLogin';
 import PrimaryButton from '~/components/PrimaryButton';
 
-function SignIn({ setToken, setEntity }) {
+function SignIn({ setToken }) {
   // Set document title
   document.title = 'Sign In';
-
-  useEffect(() => {
-    setEntity({ state: false });
-
-    // eslint-disable-next-line
-  }, []);
 
   const navigate = useNavigate();
 
@@ -42,12 +36,14 @@ function SignIn({ setToken, setEntity }) {
     // Log in case: only check email and password pass the pretreatment
     if (emailError === undefined && passwordError === undefined) {
       // Go to handle login to check on call api
-      const token = await handleLogin(email, password);
+      const token = await handleLogin(email, password, setError);
 
-      setToken(token);
+      if (token) {
+        setToken(token);
 
-      // Navigate to main page
-      navigate('/');
+        // Navigate to main page
+        navigate('/');
+      }
     }
   };
 
