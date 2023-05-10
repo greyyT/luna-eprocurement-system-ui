@@ -15,6 +15,7 @@ module.exports = {
         warn: '#FF0000',
         black: '#212B36',
         mainBg: '#F9FAFB',
+        mainText: '#637381',
       },
     },
   },

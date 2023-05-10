@@ -16,8 +16,8 @@ import SignIn from '~/pages/SignIn';
 import CreateEntity from '~/pages/CreateEntity';
 import Home from '~/pages/Home';
 import Dashboard from '~/pages/Dashboard';
-import Settings from '~/pages/Settings';
 import SignUp from '~/pages/SignUp';
+import UserList from '~/pages/UserList';
 
 function Routing() {
   const { setToken } = useToken();
@@ -95,7 +95,7 @@ function Routing() {
           element: (
             <PrivateRoute>
               <DefaultLayout>
-                <Settings />
+                <UserList />
               </DefaultLayout>
             </PrivateRoute>
           ),
