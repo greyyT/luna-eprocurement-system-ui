@@ -1,15 +1,15 @@
 import Sidebar from '../Sidebar';
+import Topbar from '../Topbar';
 
 function DefaultLayout({ children }) {
   return (
-    <div>
+    <>
       <Sidebar />
       <main className="pl-70 h-screen bg-mainBg">
-        <div className="flex h-20 bg-white"></div>
-        <div className="line"></div>
+        <Topbar />
         <div>{children}</div>
       </main>
-    </div>
+    </>
   );
 }
 

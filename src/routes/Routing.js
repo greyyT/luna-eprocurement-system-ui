@@ -18,11 +18,19 @@ import Home from '~/pages/Home';
 import Dashboard from '~/pages/Dashboard';
 import SignUp from '~/pages/SignUp';
 import UserList from '~/pages/UserList';
+import Teams from '~/pages/Teams';
+import ConfigureRoles from '~/pages/ConfigureRoles';
+import Settings from '~/pages/Settings';
+import Test from '~/pages/Test';
 
 function Routing() {
   const { setToken } = useToken();
 
   const routes = useRoutes([
+    {
+      path: '/test',
+      element: <Test />,
+    },
     {
       path: '/sign-in',
       element: (
@@ -89,16 +97,25 @@ function Routing() {
     },
     {
       path: '/settings',
+      element: (
+        <PrivateRoute>
+          <DefaultLayout>
+            <Settings />
+          </DefaultLayout>
+        </PrivateRoute>
+      ),
       children: [
         {
           path: 'user-list',
-          element: (
-            <PrivateRoute>
-              <DefaultLayout>
-                <UserList />
-              </DefaultLayout>
-            </PrivateRoute>
-          ),
+          element: <UserList />,
+        },
+        {
+          path: 'teams',
+          element: <Teams />,
+        },
+        {
+          path: 'config-roles',
+          element: <ConfigureRoles />,
         },
       ],
     },
