@@ -21,16 +21,11 @@ import UserList from '~/pages/UserList';
 import Teams from '~/pages/Teams';
 import ConfigureRoles from '~/pages/ConfigureRoles';
 import Settings from '~/pages/Settings';
-import Test from '~/pages/Test';
 
 function Routing() {
   const { setToken } = useToken();
 
   const routes = useRoutes([
-    {
-      path: '/test',
-      element: <Test />,
-    },
     {
       path: '/sign-in',
       element: (
