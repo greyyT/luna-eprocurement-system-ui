@@ -42,9 +42,7 @@ function SignUp() {
       // Go to handle sign up to check on call api
       const isSuccess = await handleSignUp(email, name, password, setError);
 
-      if (isSuccess) {
-        navigate('/create-entity');
-      }
+      console.log(isSuccess);
     }
   };
 
