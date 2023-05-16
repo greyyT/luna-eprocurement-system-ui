@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, Link } from 'react-router-dom';
 import useToken from '~/utils/useToken';
 
 function Sidebar() {
@@ -7,7 +7,7 @@ function Sidebar() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    const accepted = false;
+    const accepted = true;
 
     if (accepted) {
       deleteToken();
@@ -16,7 +16,7 @@ function Sidebar() {
   };
 
   return (
-    <nav className="fixed left-0 top-0 bottom-0 w-70 bg-white sidebar-shadow">
+    <nav className="fixed left-0 top-0 bottom-0 w-70 bg-white sidebar-shadow z-10">
       <div className="flex items-center gap-3 mt-10 mx-6">
         <img src="/images/icons/lunar-client.svg" className="w-10" alt="" />
         <p className="font-inter text-black font-semibold">Lunar e-Procurement</p>
@@ -47,10 +47,10 @@ function Sidebar() {
           <p className="font-inter leading-6 text-mainText">Dashboard</p>
         </NavLink>
         <div className="line mx-10 mt-2"></div>
-        <NavLink
-          to="/settings/user-list"
-          className={({ isActive }) =>
-            (isActive
+        <Link
+          to={'/settings/user-list'}
+          className={
+            (window.location.pathname.includes('/settings')
               ? 'bg-[#F4F7FF] before:absolute before:w-[3px] before:h-full before:right-0 before:bg-primary '
               : 'hover:bg-[#F4F7FF] hover:before:absolute hover:before:w-[3px] hover:before:h-full hover:before:right-0 hover:before:bg-primary ') +
             'relative flex h-[42px] gap-[10px] px-10 mt-4 items-center'
@@ -58,7 +58,7 @@ function Sidebar() {
         >
           <img src="/images/icons/settings.svg" alt="" className="w-[18px]" />
           <p className="font-inter leading-6 text-mainText">Settings</p>
-        </NavLink>
+        </Link>
         <button
           className="relative flex h-[42px] gap-[10px] px-10 items-center hover:bg-[#F4F7FF] hover:before:absolute hover:before:w-[3px] hover:before:h-full hover:before:right-0 hover:before:bg-primary"
           onClick={handleLogout}

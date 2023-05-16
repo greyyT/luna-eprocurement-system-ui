@@ -1,6 +1,6 @@
 import axios from '~/api/axios';
 
-const LOGIN_URL = '/auth/login';
+const LOGIN_URL = '/auth/register';
 
 const handleLogin = async (email, password, setError) => {
   try {
@@ -9,7 +9,7 @@ const handleLogin = async (email, password, setError) => {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    if (res?.status === 200) {
+    if (res?.status === 201) {
       return res.data;
     }
   } catch (err) {

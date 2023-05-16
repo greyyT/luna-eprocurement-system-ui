@@ -9,7 +9,7 @@ const handleSignUp = async (email, username, password) => {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    if (res.status === 200) {
+    if (res.status === 201) {
       return true;
     }
   } catch (err) {

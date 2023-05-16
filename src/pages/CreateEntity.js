@@ -7,8 +7,6 @@ function CreateEntity({ setToken, entity }) {
   // Set page title
   document.title = 'Create Entity';
 
-  console.log(entity);
-
   const [entityCode, setEntityCode] = useState('');
   const [bussinessNum, setBussinessNum] = useState('');
 
@@ -34,7 +32,6 @@ function CreateEntity({ setToken, entity }) {
     });
 
     if (entityCode === undefined && bussinessNumError === undefined) {
-      console.log('Ok');
     }
   };
 

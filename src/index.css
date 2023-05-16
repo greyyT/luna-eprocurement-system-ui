@@ -2,14 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  @apply font-montserrat;
+@layer base {
+  * {
+    @apply font-montserrat;
+  }
 }
 
-.sidebar-shadow {
-  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.12);
+@layer components {
+  .sidebar-shadow {
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.12);
+  }
+
+  .line {
+    border: 1px solid #e7e7e7;
+  }
+
+  .user-list-columns {
+    grid-template-columns: 1.7fr 1.3fr 1fr 1fr;
+  }
 }
 
-.line {
-  border: 1px solid #e7e7e7;
+.action-btn-primary {
+  @apply text-primary border-primary hover:bg-primary;
+}
+
+.action-btn-red {
+  @apply text-red border-red hover:bg-red;
 }
