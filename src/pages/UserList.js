@@ -4,12 +4,15 @@ import { USER_LIST } from '~/components/Data';
 import Modal from '~/components/Modal';
 import ModalUserInfo from '~/components/ModalUserInfo';
 import Pagination from '~/components/Pagination';
+import useMountTransition from '~/utils/useMountTransition';
 
 function UserList() {
   const [userList, setUserList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [modalState, setModalState] = useState(false);
   const [currentModal, setCurrentModal] = useState();
+
+  const hasTransitionedIn = useMountTransition(modalState, 200);
 
   useEffect(() => {
     setUserList(USER_LIST);
@@ -79,8 +82,12 @@ function UserList() {
                   }}
                 />
               </div>
-              {modalState && currentModal === user.id && (
-                <Modal handleClose={handleClose} active={modalState && currentModal === user.id}>
+              {(modalState || hasTransitionedIn) && currentModal === user.id && (
+                <Modal
+                  handleClose={handleClose}
+                  active={modalState && currentModal === user.id}
+                  hasTransitionedIn={hasTransitionedIn}
+                >
                   <ModalUserInfo user={user} handleClose={handleClose} userList={userList} setUserList={setUserList} />
                 </Modal>
               )}

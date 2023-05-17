@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import EditOptions from './EditOptions';
+import ModalSelectBox from './ModalSelectBox';
 import { DEPARTMENT_LIST, TEAM_LIST, ROLE_LIST } from './Data';
 
 function ModalUserInfo({ user, userList, setUserList, handleClose, edit, toggleEdit }) {
@@ -7,6 +7,28 @@ function ModalUserInfo({ user, userList, setUserList, handleClose, edit, toggleE
   const [team, setTeam] = useState(user.team);
   const [role, setRole] = useState(user.role);
 
+  const selectBoxes = [
+    {
+      selected: department,
+      setSelected: setDepartment,
+      options: DEPARTMENT_LIST,
+      alt: 'Choose Department',
+    },
+    {
+      selected: team,
+      setSelected: setTeam,
+      options: TEAM_LIST,
+      alt: 'Choose Team',
+    },
+    {
+      selected: role,
+      setSelected: setRole,
+      options: ROLE_LIST,
+      alt: 'Choose Role',
+    },
+  ];
+
+  // Handle manager submit edit user
   const handleChange = (id) => {
     const changedUser = {
       ...user,
@@ -37,15 +59,17 @@ function ModalUserInfo({ user, userList, setUserList, handleClose, edit, toggleE
         </div>
       </div>
       <div className="flex flex-col gap-3 mt-2">
-        <EditOptions
-          selected={department}
-          setSelected={setDepartment}
-          options={DEPARTMENT_LIST}
-          edit={edit}
-          toggleEdit={toggleEdit}
-        />
-        <EditOptions selected={team} setSelected={setTeam} options={TEAM_LIST} edit={edit} toggleEdit={toggleEdit} />
-        <EditOptions selected={role} setSelected={setRole} options={ROLE_LIST} edit={edit} toggleEdit={toggleEdit} />
+        {selectBoxes.map((selectBox, idx) => (
+          <ModalSelectBox
+            key={idx}
+            selected={selectBox.selected}
+            setSelected={selectBox.setSelected}
+            options={selectBox.options}
+            alt={selectBox.alt}
+            edit={edit}
+            toggleEdit={toggleEdit}
+          />
+        ))}
       </div>
       <div className="flex mt-6 gap-6">
         <button
