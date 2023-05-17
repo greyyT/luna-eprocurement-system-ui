@@ -4,7 +4,7 @@ function ActionButton({ type, onClick }) {
   const [color, setColor] = useState();
 
   useEffect(() => {
-    if (type === 'edit') {
+    if (type === 'edit' || type === 'add team') {
       setColor('primary');
     } else if (type === 'delete') {
       setColor('red');
