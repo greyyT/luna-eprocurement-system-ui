@@ -20,6 +20,7 @@ module.exports = {
         mainBg: '#F9FAFB',
         mainText: '#637381',
         red: '#DC3545',
+        green: '#3CA745',
         'gray-50': 'd5d6d8',
         'gray-100': '#ACB6BE',
         'gray-150': '#E3E3E3',
