@@ -9,7 +9,7 @@ const handleLogin = async (email, password, setError) => {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    if (res?.status === 201) {
+    if (res?.status === 200) {
       return res.data;
     }
   } catch (err) {

@@ -40,9 +40,11 @@ function SignUp() {
     // Log in case: only check email and password pass the pretreatment
     if (emailError === undefined && nameError === undefined && passwordError === undefined) {
       // Go to handle sign up to check on call api
-      const isSuccess = await handleSignUp(email, name, password, setError);
+      const res = await handleSignUp(email, name, password, setError);
 
-      console.log(isSuccess);
+      if (res.status === 200) {
+        navigate('/create-entity');
+      }
     }
   };
 

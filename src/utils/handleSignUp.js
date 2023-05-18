@@ -1,6 +1,6 @@
-import axios from '~/api/axios';
+// import axios from '~/api/axios';
 
-const ACCOUNTS_URL = '/auth/register';
+// const ACCOUNTS_URL = '/auth/register';
 
 const handleSignUp = async (email, username, password) => {
   // try {
