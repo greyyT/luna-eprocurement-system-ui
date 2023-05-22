@@ -41,7 +41,7 @@ function Routing() {
       element: (
         <AuthRoute>
           <EntityLayout>
-            <CreateEntity setToken={setToken} />
+            <CreateEntity />
           </EntityLayout>
         </AuthRoute>
       ),
@@ -51,7 +51,7 @@ function Routing() {
       element: (
         <AuthRoute>
           <AuthLayout>
-            <SignIn setToken={setToken} />
+            <SignIn />
           </AuthLayout>
         </AuthRoute>
       ),
@@ -61,7 +61,7 @@ function Routing() {
       element: (
         <AuthRoute>
           <AuthLayout>
-            <SignUp />
+            <SignUp setToken={setToken} />
           </AuthLayout>
         </AuthRoute>
       ),

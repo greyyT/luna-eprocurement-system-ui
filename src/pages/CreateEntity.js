@@ -4,6 +4,7 @@ import Input from '~/components/Input';
 import PrimaryButton from '~/components/PrimaryButton';
 import handleCreateEntity from '~/utils/handleCreateEntity';
 import { useNavigate } from 'react-router-dom';
+import handleJoinEntity from '~/utils/handleJoinEntity';
 
 function CreateEntity({ setToken, entity }) {
   // Set page title
@@ -40,7 +41,12 @@ function CreateEntity({ setToken, entity }) {
     if (entityCode === undefined && bussinessNumError === undefined) {
       const res = handleCreateEntity(bussinessNum, entityCode, setError);
 
-      if (res) {
+      if (!res) {
+        return undefined;
+      }
+
+      const join = handleJoinEntity(entityCode);
+      if (join) {
         navigate('/');
       }
     }

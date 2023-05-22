@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Input from '~/components/Input';
 import PrimaryButton from '~/components/PrimaryButton';
+import handleJoinEntity from '~/utils/handleJoinEntity';
+import handleInput from '~/utils/validator';
 
 function JoinEntity({ setToken, setEntity }) {
   // Set document title
   document.title = 'Join Entity';
 
-  const [entityCode, setEntityCode] = useState('');
+  const navigate = useNavigate();
 
+  const [entityCode, setEntityCode] = useState('');
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -15,7 +19,17 @@ function JoinEntity({ setToken, setEntity }) {
   }, [entityCode]);
 
   const handleSubmit = () => {
-    console.log('Hello');
+    const entityCodeError = handleInput(entityCode, 'required', 'entityCode');
+
+    setError(entityCodeError);
+
+    if (entityCodeError === undefined) {
+      const res = handleJoinEntity(entityCode);
+
+      if (res) {
+        navigate('/');
+      }
+    }
   };
 
   return (

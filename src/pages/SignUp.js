@@ -4,8 +4,9 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import handleInput from '~/utils/validator';
 import handleSignUp from '~/utils/handleSignUp';
 import PrimaryButton from '~/components/PrimaryButton';
+import handleLogin from '~/utils/handleLogin';
 
-function SignUp() {
+function SignUp({ setToken }) {
   // Set document title
   document.title = 'Sign Up';
 
@@ -43,6 +44,16 @@ function SignUp() {
       const res = await handleSignUp(email, name, password, setError);
 
       if (res.status === 200) {
+        const token = await handleLogin(email, password);
+
+        if (!token) {
+          alert('Server Time Out');
+          return null;
+        }
+
+        setToken(token);
+        sessionStorage.setItem('email', email);
+
         navigate('/create-entity');
       }
     }

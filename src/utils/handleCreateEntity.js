@@ -24,8 +24,8 @@ const handleCreateEntity = async (name, code, setError) => {
       });
     } else {
       setError({
-        entity: 'Login failed',
-        businessNum: 'Login failed',
+        entity: 'Create failed',
+        businessNum: 'Create failed',
       });
     }
   }
