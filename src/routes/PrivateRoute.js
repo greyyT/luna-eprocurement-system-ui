@@ -7,15 +7,20 @@ function PrivateRoute({ children }) {
   const { token } = useToken();
   const { data, setData } = useData();
 
+  const fetchUserInfo = async (token) => {
+    const res = await handleUserInfo(token);
+    console.log(res);
+    if (res) {
+      setData(res[0]);
+    }
+  };
+
   if (!token) {
     return <Navigate to="/sign-in" />;
   }
 
   if (!data) {
-    const res = handleUserInfo(token);
-    if (res) {
-      setData(res);
-    }
+    fetchUserInfo(token);
   }
 
   if (data.legalEntityCode === null) {

@@ -46,22 +46,19 @@ function SignUp({ setToken }) {
       if (res.status === 200) {
         const token = await handleLogin(email, password);
 
-        if (!token) {
-          alert('Server Time Out');
-          return null;
+        if (token) {
+          setToken(token);
+          sessionStorage.setItem('email', email);
+
+          navigate('/create-entity');
         }
-
-        setToken(token);
-        sessionStorage.setItem('email', email);
-
-        navigate('/create-entity');
       }
     }
   };
 
   return (
     <>
-      <h1 className="font-bold font-inter text-3xl ">Sign up</h1>
+      <h1 className="font-bold font-inter text-3xl">Sign up</h1>
       <div className="flex flex-col gap-4 mt-10">
         <Input
           label="Email"
