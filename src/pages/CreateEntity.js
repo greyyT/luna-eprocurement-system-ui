@@ -5,12 +5,15 @@ import PrimaryButton from '~/components/PrimaryButton';
 import handleCreateEntity from '~/utils/handleCreateEntity';
 import { useNavigate } from 'react-router-dom';
 import handleJoinEntity from '~/utils/handleJoinEntity';
+import useToken from '~/utils/useToken';
 
 function CreateEntity({ setToken, entity }) {
   // Set page title
   useEffect(() => {
     document.title = 'Create Entity';
   }, []);
+
+  const { token } = useToken();
 
   const navigate = useNavigate();
 
@@ -29,7 +32,7 @@ function CreateEntity({ setToken, entity }) {
     });
   }, [entityCode, bussinessNum]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const entityCodeError = handleInput(entityCode, 'required', 'entityCode');
     const bussinessNumError = handleInput(bussinessNum, 'required');
 
@@ -38,14 +41,14 @@ function CreateEntity({ setToken, entity }) {
       bussinessNum: bussinessNumError,
     });
 
-    if (entityCode === undefined && bussinessNumError === undefined) {
-      const res = handleCreateEntity(bussinessNum, entityCode, setError);
+    if (entityCodeError === undefined && bussinessNumError === undefined) {
+      const res = await handleCreateEntity(bussinessNum, entityCode, setError, token);
 
       if (!res) {
         return undefined;
       }
 
-      const join = handleJoinEntity(entityCode);
+      const join = handleJoinEntity(entityCode, token);
       if (join) {
         navigate('/');
       }

@@ -10,7 +10,7 @@ const useData = () => {
   const [data, setData] = useState(getData());
 
   const saveData = (userData) => {
-    localStorage.setItem('data', JSON.stringify(userData));
+    sessionStorage.setItem('data', JSON.stringify(userData));
     setData(userData);
   };
 

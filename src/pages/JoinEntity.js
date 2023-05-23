@@ -18,13 +18,13 @@ function JoinEntity({ setToken, setEntity }) {
     setError('');
   }, [entityCode]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const entityCodeError = handleInput(entityCode, 'required', 'entityCode');
 
     setError(entityCodeError);
 
     if (entityCodeError === undefined) {
-      const res = handleJoinEntity(entityCode);
+      const res = await handleJoinEntity(entityCode);
 
       if (res) {
         navigate('/');

@@ -10,6 +10,7 @@ import EntityLayout from '~/components/Layout/EntityLayout';
 // Import Route orders
 import AuthRoute from './AuthRoute';
 import PrivateRoute from './PrivateRoute';
+import EntityRoute from './EntityRoute';
 
 // Import Pages
 import SignIn from '~/pages/SignIn';
@@ -39,21 +40,21 @@ function Routing() {
     {
       path: '/create-entity',
       element: (
-        <AuthRoute>
+        <EntityRoute>
           <EntityLayout>
             <CreateEntity />
           </EntityLayout>
-        </AuthRoute>
+        </EntityRoute>
       ),
     },
     {
       path: '/join-entity',
       element: (
-        <AuthRoute>
+        <EntityRoute>
           <AuthLayout>
             <SignIn />
           </AuthLayout>
-        </AuthRoute>
+        </EntityRoute>
       ),
     },
     {
