@@ -22,6 +22,7 @@ import UserList from '~/pages/UserList';
 import Teams from '~/pages/Teams';
 import ConfigureRoles from '~/pages/ConfigureRoles';
 import Settings from '~/pages/Settings';
+import JoinEntity from '~/pages/JoinEntity';
 
 function Routing() {
   const { setToken } = useToken();
@@ -51,9 +52,9 @@ function Routing() {
       path: '/join-entity',
       element: (
         <EntityRoute>
-          <AuthLayout>
-            <SignIn />
-          </AuthLayout>
+          <EntityLayout>
+            <JoinEntity />
+          </EntityLayout>
         </EntityRoute>
       ),
     },

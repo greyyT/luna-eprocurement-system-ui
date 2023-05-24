@@ -44,12 +44,7 @@ function CreateEntity({ setToken, entity }) {
     if (entityCodeError === undefined && bussinessNumError === undefined) {
       const res = await handleCreateEntity(bussinessNum, entityCode, setError, token);
 
-      if (!res) {
-        return undefined;
-      }
-
-      const join = handleJoinEntity(entityCode, token);
-      if (join) {
+      if (res) {
         navigate('/');
       }
     }

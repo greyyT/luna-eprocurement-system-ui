@@ -9,9 +9,9 @@ function PrivateRoute({ children }) {
 
   const fetchUserInfo = async (token) => {
     const res = await handleUserInfo(token);
-    console.log(res);
+
     if (res) {
-      setData(res[0]);
+      setData(res);
     }
   };
 
@@ -23,10 +23,10 @@ function PrivateRoute({ children }) {
     fetchUserInfo(token);
   }
 
-  if (data.legalEntityCode === null) {
+  if (data?.legalEntityCode === null) {
     return <Navigate to="/create-entity" />;
   } else {
-    return { children };
+    return children;
   }
 }
 
