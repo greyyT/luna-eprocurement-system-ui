@@ -43,12 +43,11 @@ function SignUp({ setToken }) {
       // Go to handle sign up to check on call api
       const res = await handleSignUp(email, name, password, setError);
 
-      if (res.status === 200) {
+      if (res) {
         const token = await handleLogin(email, password);
 
         if (token) {
           setToken(token);
-          sessionStorage.setItem('email', email);
 
           navigate('/create-entity');
         }
