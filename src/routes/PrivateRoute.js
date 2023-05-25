@@ -1,29 +1,20 @@
 import { Navigate } from 'react-router-dom';
-import handleUserInfo from '~/utils/handleUserInfo';
-import useData from '~/utils/useData';
 import useToken from '~/utils/useToken';
+import useUserInfo from '~/utils/useUserInfo';
 
 function PrivateRoute({ children }) {
   const { token } = useToken();
-  const { data, setData } = useData();
-
-  const fetchUserInfo = async (token) => {
-    const res = await handleUserInfo(token);
-
-    if (res) {
-      setData(res);
-    }
-  };
+  const { userInfo, fetchUserInfo } = useUserInfo();
 
   if (!token) {
     return <Navigate to="/sign-in" />;
   }
 
-  if (!data) {
+  if (!userInfo) {
     fetchUserInfo(token);
   }
 
-  if (data?.legalEntityCode === null) {
+  if (userInfo?.legalEntityCode === null) {
     return <Navigate to="/create-entity" />;
   } else {
     return children;
