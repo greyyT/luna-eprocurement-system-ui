@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import ActionButton from '~/components/ActionButton';
-import { USER_LIST } from '~/components/Data';
 import Modal from '~/components/Modal';
 import ModalUserInfo from '~/components/ModalUserInfo';
 import Pagination from '~/components/Pagination';
@@ -23,7 +22,10 @@ function UserList() {
   useEffect(() => {
     const fetchData = async () => {
       const res = await handleUserList(userInfo?.legalEntityCode, token);
-      setUserList(res);
+
+      // remove current user from the list
+      const users = res.data.filter((user) => user.email !== userInfo.email);
+      setUserList(users);
     };
     fetchData();
   }, [token, userInfo]);
@@ -61,13 +63,13 @@ function UserList() {
       </div>
       <div className="line"></div>
       <div className="grid user-list-columns px-11 bg-white">
-        {currentUsersList.map((user) => {
+        {currentUsersList.map((user, idx) => {
           return (
-            <div key={user.id} className="contents">
+            <div key={idx} className="contents">
               <div className="flex gap-[18px] h-20 items-center">
                 <img src="/images/user-portrait.png" alt="" className="w-[46px]" />
                 <div className="text-sm leading-5 font-inter">
-                  <h3 className="text-black font-medium">{user.name}</h3>
+                  <h3 className="text-black font-medium">{user.username}</h3>
                   <p className="text-mainText">{user.email}</p>
                 </div>
               </div>
