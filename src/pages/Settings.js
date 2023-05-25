@@ -35,7 +35,7 @@ function Settings() {
     },
   ];
 
-  if (userInfo.role !== 'MANAGER') return undefined;
+  if (userInfo?.role !== 'MANAGER') return <h1>Member cannot see Settings Page</h1>;
 
   return (
     <div className="px-10 pt-7">
@@ -49,7 +49,7 @@ function Settings() {
         <div className="flex items-center bg-white rounded-[10px] border border-solid border-[#e4e4e4] gap-20 px-5">
           <div className="py-3">
             <h3 className="text-black leading-5 font-inter font-medium">Legal Entity Code</h3>
-            <p className="text-sm mt-1 leading-5 text-mainText">{userInfo.legalEntityCode}</p>
+            <p className="text-sm mt-1 leading-5 text-mainText">{userInfo?.legalEntityCode}</p>
           </div>
           <button
             className={
