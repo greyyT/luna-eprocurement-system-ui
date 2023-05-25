@@ -46,7 +46,7 @@ function CreateEntity() {
       const res = await handleCreateEntity(bussinessNum, entityCode, setError, token);
 
       if (res) {
-        fetchUserInfo(token);
+        await fetchUserInfo(token);
         navigate('/');
       }
     }

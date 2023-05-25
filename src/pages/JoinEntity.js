@@ -5,6 +5,7 @@ import PrimaryButton from '~/components/PrimaryButton';
 import handleJoinEntity from '~/utils/handleJoinEntity';
 import useToken from '~/utils/useToken';
 import handleInput from '~/utils/validator';
+import useUserInfo from '~/utils/useUserInfo';
 
 function JoinEntity() {
   // Set document title
@@ -13,6 +14,7 @@ function JoinEntity() {
   }, []);
 
   const { token } = useToken();
+  const { fetchUserInfo } = useUserInfo();
 
   const navigate = useNavigate();
 
@@ -32,6 +34,7 @@ function JoinEntity() {
       const res = await handleJoinEntity(entityCode, token);
 
       if (res) {
+        await fetchUserInfo(token);
         navigate('/');
       }
     }

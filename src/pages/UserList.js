@@ -4,7 +4,10 @@ import { USER_LIST } from '~/components/Data';
 import Modal from '~/components/Modal';
 import ModalUserInfo from '~/components/ModalUserInfo';
 import Pagination from '~/components/Pagination';
+import handleUserList from '~/utils/handleUserList';
 import useMountTransition from '~/utils/useMountTransition';
+import useToken from '~/utils/useToken';
+import useUserInfo from '~/utils/useUserInfo';
 
 function UserList() {
   const [userList, setUserList] = useState([]);
@@ -12,11 +15,18 @@ function UserList() {
   const [modalState, setModalState] = useState(false);
   const [currentModal, setCurrentModal] = useState();
 
+  const { token } = useToken();
+  const { userInfo } = useUserInfo();
+
   const hasTransitionedIn = useMountTransition(modalState, 200);
 
   useEffect(() => {
-    setUserList(USER_LIST);
-  }, []);
+    const fetchData = async () => {
+      const res = await handleUserList(userInfo?.legalEntityCode, token);
+      setUserList(res);
+    };
+    fetchData();
+  }, [token, userInfo]);
 
   const handleOpen = (id) => {
     setModalState(true);

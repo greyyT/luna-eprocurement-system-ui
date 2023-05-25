@@ -17,7 +17,7 @@ function PrivateRoute({ children }) {
   if (userInfo?.legalEntityCode === null) {
     return <Navigate to="/create-entity" />;
   } else {
-    return children;
+    return userInfo && children;
   }
 }
 
