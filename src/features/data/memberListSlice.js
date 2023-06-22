@@ -22,6 +22,8 @@ export const memberList = createSlice({
             ...member,
             departmentCode,
             departmentName,
+            teamName: null,
+            teamCode: null,
           };
         }
         return member;
