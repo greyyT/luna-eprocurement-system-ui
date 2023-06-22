@@ -11,6 +11,7 @@ export const fetchMemberList = createAsyncThunk(
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         withCredentials: true,
       });
+      // return res.data.data;
       return res.data;
     } catch (err) {
       if (err.response) {
