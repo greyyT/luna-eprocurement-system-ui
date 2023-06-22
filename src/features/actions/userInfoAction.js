@@ -62,12 +62,3 @@ export const joinEntity = createAsyncThunk(
     }
   },
 );
-
-const timer = new Promise((resolve) => {
-  setTimeout(resolve, 200);
-});
-
-export const testAsync = createAsyncThunk('userInfo/testAsync', async (_, { rejectWithValue }) => {
-  await timer();
-  return 'Hello';
-});
