@@ -6,7 +6,7 @@ function DefaultLayout({ children }) {
   return (
     <>
       <Sidebar />
-      <main className="pl-70 h-screen bg-mainBg">
+      <main className="pl-70 min-h-screen bg-mainBg">
         <Topbar />
         <div>
           <Suspense>{children}</Suspense>

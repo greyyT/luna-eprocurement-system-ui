@@ -20,6 +20,8 @@ const CreateEntity = lazy(() => import('~/pages/CreateEntity'));
 const JoinEntity = lazy(() => import('~/pages/JoinEntity'));
 const Home = lazy(() => import('~/pages/Home'));
 const Dashboard = lazy(() => import('~/pages/Dashboard'));
+const ProductsList = lazy(() => import('~/pages/ProductsList'));
+const ProductInfo = lazy(() => import('~/pages/ProductInfo'));
 const Settings = lazy(() => import('~/pages/Settings'));
 const UserList = lazy(() => import('~/pages/UserList'));
 const Teams = lazy(() => import('~/pages/Teams'));
@@ -86,6 +88,26 @@ function Routing() {
         <PrivateRoute>
           <DefaultLayout>
             <Dashboard />
+          </DefaultLayout>
+        </PrivateRoute>
+      ),
+    },
+    {
+      path: '/products-list',
+      element: (
+        <PrivateRoute>
+          <DefaultLayout>
+            <ProductsList />
+          </DefaultLayout>
+        </PrivateRoute>
+      ),
+    },
+    {
+      path: '/products-list/:productID',
+      element: (
+        <PrivateRoute>
+          <DefaultLayout>
+            <ProductInfo />
           </DefaultLayout>
         </PrivateRoute>
       ),
