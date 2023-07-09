@@ -31,6 +31,8 @@ const VendorEdit = React.memo(({ name, price, id }) => {
 
     if (nameError === undefined && priceError === undefined) {
       dispatch(setVendor({ name: editName, price: editPrice, id }));
+      setEditName('');
+      setEditPrice('');
       setEdit(false);
     }
   };
