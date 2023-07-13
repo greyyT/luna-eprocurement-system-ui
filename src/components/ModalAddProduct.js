@@ -1,48 +1,80 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import useMountTransition from '~/utils/useMountTransition';
+import React, { useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { createProduct } from '~/api/productService';
+import { addProduct } from '~/features/data/productListSlice';
+import useToken from '~/utils/useToken';
 
-const ModalAddProduct = React.memo(({ handleClose, edit, toggleEdit }) => {
+const ModalAddProduct = React.memo(({ handleClose }) => {
+  const { token } = useToken();
+
+  const { userInfo } = useSelector((state) => state.userInfo);
+
+  const dispatch = useDispatch();
+
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [SKU, setSKU] = useState('');
-  const [productCode, setProductCode] = useState('');
+  const [code, setCode] = useState('');
   const [category, setCategory] = useState('');
   const [brand, setBrand] = useState('');
-  const [dimensions, setDimensions] = useState('');
+  const [width, setWidth] = useState('');
+  const [height, setHeight] = useState('');
+  const [length, setLength] = useState('');
   const [weight, setWeight] = useState('');
   const [material, setMaterial] = useState('');
   const [color, setColor] = useState('');
 
-  const vendors = ['Vendor A', 'Vendor B', 'Vendor C', 'Vendor D'];
-  const [selectedVendors, setSelectedVendors] = useState([]);
-  const [availableVendors, setAvailableVendors] = useState(vendors);
-  const [selectState, setSelecState] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const fileInputRef = useRef(null);
 
-  const hasTransitionedIn = useMountTransition(selectState, 200);
-
-  const handleSelectChange = (vendor) => {
-    setSelectedVendors((prevState) => [...prevState, vendor].sort());
-
-    const remainingOptions = availableVendors.filter((option) => option !== vendor);
-    setAvailableVendors(remainingOptions);
+  const handleAddImageClick = () => {
+    fileInputRef.current.click();
   };
 
-  const handleRemoveOption = (vendor) => {
-    const updatedVendors = selectedVendors.filter((selectedOption) => selectedOption !== vendor);
-    setSelectedVendors(updatedVendors);
-    setAvailableVendors([...availableVendors, vendor].sort());
-  };
+  const handleAddImage = (ev) => {
+    const selectedFile = ev.target.files[0];
 
-  useEffect(() => {
-    if (!edit) {
-      setSelecState(false);
+    if (selectedFile) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        setSelectedImage(reader.result);
+      };
+
+      reader.readAsDataURL(selectedFile);
     }
-  }, [edit]);
+  };
 
-  const handleClick = useCallback(() => {
-    setSelecState((prevState) => !prevState);
-    toggleEdit();
-  }, [toggleEdit]);
+  const handleSubmit = async () => {
+    const product = {
+      name,
+      description,
+      SKU,
+      brand,
+      code,
+      category,
+      weight,
+      dimension: {
+        width,
+        height,
+        length,
+      },
+      color,
+      material,
+      mediaFile: {
+        productImage: 'Test',
+        videoLink: 'test',
+      },
+      legalEntityCode: userInfo.legalEntityCode,
+    };
+
+    const res = await createProduct(token, product);
+
+    if (res) {
+      dispatch(addProduct(product));
+      handleClose();
+    }
+  };
 
   return (
     <div
@@ -53,19 +85,34 @@ const ModalAddProduct = React.memo(({ handleClose, edit, toggleEdit }) => {
         <h1 className="font-inter font-semibold text-2xl text-black">Create a new product</h1>
         <img src="/images/icons/close.svg" alt="" onClick={handleClose} className="cursor-pointer p-2 hover:" />
       </div>
-      <div className="flex justify-center mt-9">
-        <div className="flex flex-col items-center justify-center h-[180px] w-[389px] bg-[#F4F7FF] border border-dashed border-spacing-4 border-primary rounded-md">
-          <img src="/images/upload.png" className="h-10 cursor-pointer" alt="" />
-          <p className="mt-[14px] text-xs font-inter">
-            <span className="text-primary cursor-pointer">Click to upload</span> or drag and drop
-          </p>
-          <p className="mt-1 text-center text-xs font-inter">
-            SVG, PNG, JPG or GIF
-            <br />
-            (max, 800 X 800px)
+      <input type="file" ref={fileInputRef} className="hidden" onChange={handleAddImage} />
+      {selectedImage ? (
+        <div className="flex flex-col items-center gap-2 mt-4">
+          <img src={selectedImage} alt="" className="w-60" />
+          <p className="text-xs font-inter">
+            Don't want this?{' '}
+            <span className="text-primary cursor-pointer hover:underline font-inter" onClick={handleAddImageClick}>
+              Change the picture!
+            </span>
           </p>
         </div>
-      </div>
+      ) : (
+        <div className="flex justify-center mt-9">
+          <div className="flex flex-col items-center justify-center h-[180px] w-[389px] bg-[#F4F7FF] border border-dashed border-spacing-4 border-primary rounded-md">
+            <img src="/images/upload.png" className="h-10 cursor-pointer" alt="" onClick={handleAddImageClick} />
+            <p className="mt-[14px] text-xs font-inter">
+              <span className="text-primary cursor-pointer font-inter hover:underline" onClick={handleAddImageClick}>
+                Click to upload
+              </span>
+            </p>
+            <p className="mt-1 text-center text-xs font-inter">
+              SVG, PNG, JPG or GIF
+              <br />
+              (max, 800 X 800px)
+            </p>
+          </div>
+        </div>
+      )}
       <div className="mt-7 flex flex-col gap-5">
         <input
           type="text"
@@ -81,58 +128,6 @@ const ModalAddProduct = React.memo(({ handleClose, edit, toggleEdit }) => {
           value={description}
           onChange={(ev) => setDescription(ev.target.value)}
         />
-        <button
-          onClick={handleClick}
-          className={`relative flex justify-between items-center gap-4 w-full font-inter p-4 outline-none border border-solid ${
-            selectState ? 'border-primary' : 'border-[#F0F0F0]'
-          } rounded-[5px]`}
-        >
-          <div className="flex gap-3">
-            {selectedVendors.length === 0 ? (
-              <p className="text-[#637381]">Vendor</p>
-            ) : (
-              selectedVendors.map((vendor) => (
-                <div
-                  key={vendor}
-                  className="py-[6px] px-[10px] flex gap-1 bg-[#EEEEEE] rounded-[3px]"
-                  onClick={(ev) => ev.stopPropagation()}
-                >
-                  <div>{vendor}</div>
-                  <img
-                    src="/images/icons/close.svg"
-                    alt=""
-                    className="w-4"
-                    onClick={() => handleRemoveOption(vendor)}
-                  />
-                </div>
-              ))
-            )}
-          </div>
-          <img
-            src="/images/icons/arrow.svg"
-            alt=""
-            className={`transform ${selectState ? 'rotate-90' : 'rotate-0'} transition-all`}
-          />
-          {availableVendors.length !== 0 && (selectState || hasTransitionedIn) && (
-            <div
-              className={`multiple-select-box ${hasTransitionedIn && 'in'} ${selectState && 'visible'}`}
-              onClick={(ev) => ev.stopPropagation()}
-            >
-              {availableVendors.map((vendor) => {
-                return (
-                  <div
-                    value={vendor}
-                    key={vendor}
-                    onClick={() => handleSelectChange(vendor)}
-                    className="text-[#637381] hover:text-primary hover:bg-[#F5F7FD] cursor-pointer p-4 text-left"
-                  >
-                    {vendor}
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </button>
         <div className="flex gap-14">
           <input
             type="text"
@@ -145,8 +140,8 @@ const ModalAddProduct = React.memo(({ handleClose, edit, toggleEdit }) => {
             type="text"
             placeholder="Product Code"
             className="w-full font-inter p-4 outline-none border border-solid border-[#F0F0F0] rounded-[5px] placeholder:text-[#637381]"
-            value={productCode}
-            onChange={(ev) => setProductCode(ev.target.value)}
+            value={code}
+            onChange={(ev) => setCode(ev.target.value)}
           />
         </div>
         <div className="flex gap-14">
@@ -168,10 +163,26 @@ const ModalAddProduct = React.memo(({ handleClose, edit, toggleEdit }) => {
         <div className="flex gap-14">
           <input
             type="text"
-            placeholder="Dimensions"
+            placeholder="Width"
             className="w-full font-inter p-4 outline-none border border-solid border-[#F0F0F0] rounded-[5px] placeholder:text-[#637381]"
-            value={dimensions}
-            onChange={(ev) => setDimensions(ev.target.value)}
+            value={width}
+            onChange={(ev) => setWidth(ev.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Height"
+            className="w-full font-inter p-4 outline-none border border-solid border-[#F0F0F0] rounded-[5px] placeholder:text-[#637381]"
+            value={height}
+            onChange={(ev) => setHeight(ev.target.value)}
+          />
+        </div>
+        <div className="flex gap-14">
+          <input
+            type="text"
+            placeholder="Length"
+            className="w-full font-inter p-4 outline-none border border-solid border-[#F0F0F0] rounded-[5px] placeholder:text-[#637381]"
+            value={length}
+            onChange={(ev) => setLength(ev.target.value)}
           />
           <input
             type="text"
@@ -198,7 +209,10 @@ const ModalAddProduct = React.memo(({ handleClose, edit, toggleEdit }) => {
           />
         </div>
       </div>
-      <button className="flex justify-center items-center h-14 w-full mt-10 rounded-[5px] placeholder:text-[#637381] text-white font-roboto leading-5 bg-primary">
+      <button
+        className="flex justify-center items-center h-14 w-full mt-10 rounded-[5px] placeholder:text-[#637381] text-white font-roboto leading-5 bg-primary"
+        onClick={handleSubmit}
+      >
         Submit
       </button>
     </div>

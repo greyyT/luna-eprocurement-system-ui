@@ -1,69 +1,61 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { searchProduct } from '~/api/productService';
 import Modal from '~/components/Modal';
 import ModalAddProduct from '~/components/ModalAddProduct';
 import Pagination from '~/components/Pagination';
 import SearchBox from '~/components/SearchBox';
 import VendorTag from '~/components/VendorTag';
+import { fetchProductList } from '~/features/actions/productListAction';
 import useMountTransition from '~/utils/useMountTransition';
+import useToken from '~/utils/useToken';
 
 const ProductList = React.memo(() => {
   const [search, setSearch] = useState('');
+  const [searchResult, setSearchResult] = useState([]);
 
   const [modalState, setModalState] = useState(false);
 
   const hasTransitionedIn = useMountTransition(modalState, 200);
 
-  const products = [
-    {
-      image: '/images/product-1.png',
-      name: 'Hollow Port',
-      description: 'Awesome yellow t-shirt',
-      SKU: 'HP21001',
-      productCode: '38BEE27',
-      vendors: ['Vendor A', 'Vendor B'],
-    },
-    {
-      image: '/images/product-1.png',
-      name: 'Hollow Port',
-      description: 'Awesome yellow t-shirt',
-      SKU: 'HP21001',
-      productCode: '38BEE28',
-      vendors: ['Vendor A', 'Vendor B'],
-    },
-    {
-      image: '/images/product-1.png',
-      name: 'Hollow Port',
-      description: 'Awesome yellow t-shirt',
-      SKU: 'HP21001',
-      productCode: '38BEE29',
-      vendors: ['Vendor A', 'Vendor B'],
-    },
-    {
-      image: '/images/product-1.png',
-      name: 'Hollow Port',
-      description: 'Awesome yellow t-shirt',
-      SKU: 'HP21001',
-      productCode: '38BEE30',
-      vendors: ['Vendor A', 'Vendor B'],
-    },
-    {
-      image: '/images/product-1.png',
-      name: 'Hollow Port',
-      description: 'Awesome yellow t-shirt',
-      SKU: 'HP21001',
-      productCode: '38BEE31',
-      vendors: ['Vendor A', 'Vendor B'],
-    },
-  ];
+  const { token } = useToken();
+
+  const { productList } = useSelector((state) => state.productList);
+  const { userInfo } = useSelector((state) => state.userInfo);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const legalEntityCode = userInfo.legalEntityCode;
+
+    if (!productList) {
+      dispatch(fetchProductList({ token, legalEntityCode }));
+    }
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    const legalEntityCode = userInfo.legalEntityCode;
+    const handleSearchProducts = async () => {
+      const res = await searchProduct(token, legalEntityCode, search);
+
+      if (res) {
+        setSearchResult(res);
+      }
+    };
+    handleSearchProducts();
+    // eslint-disable-next-line
+  }, [search]);
+  console.log(searchResult);
 
   // Variables for current page and change current page for pagination
   const [currentPage, setCurrentPage] = useState(1);
 
-  const productssPerPage = 3;
-  const lastProductsIdx = currentPage * productssPerPage;
-  const firstProductsIdx = lastProductsIdx - productssPerPage;
-  let currentProductsLists = products.slice(firstProductsIdx, lastProductsIdx);
+  const productsPerPage = 3;
+  const lastProductsIdx = currentPage * productsPerPage;
+  const firstProductsIdx = lastProductsIdx - productsPerPage;
+  let currentProductsLists = productList?.slice(firstProductsIdx, lastProductsIdx);
 
   useEffect(() => {
     document.title = 'Products List';
@@ -101,32 +93,31 @@ const ProductList = React.memo(() => {
           <h3 className="font-inter text-black font-semibold leading-6 py-[18px] flex items-center">Remove</h3>
         </div>
         <div className="line"></div>
-        {currentProductsLists.map((product, idx) => {
+        {currentProductsLists?.map((product, idx) => {
           return (
-            <div className="contents" key={product.productCode}>
+            <div className="contents" key={product?.code}>
               <div className="grid products-list-columns w-full">
                 <div className="flex items-center py-[30px]">
-                  <img src={product.image} alt="" className="w-[70px] rounded-[5px]" />
+                  <img src="/images/product-1.png" alt="" className="w-[70px] rounded-[5px]" />
                   <div className="leading-6 ml-5">
                     <Link
                       className="text-lg font-inter font-semibold text-black hover:text-primary hover:underline hover:underline-offset-2"
-                      to={`/products-list/${product.productCode}`}
+                      to={`/products-list/${product?.code}`}
                     >
-                      {product.name}
+                      {product?.name}
                     </Link>
-                    <p className="font-medium font-inter text-[#637681]">{product.description}</p>
+                    <p className="font-medium font-inter text-[#637681]">{product?.description}</p>
                   </div>
                 </div>
                 <div className="flex items-center font-inter font-semibold text-lg leading-6 text-black">
-                  {product.SKU}
+                  {product?.SKU}
                 </div>
                 <div className="flex items-center font-inter font-semibold text-lg leading-6 text-black">
-                  {product.productCode}
+                  {product?.code}
                 </div>
                 <div className="flex flex-col justify-center items-baseline gap-3">
-                  {product.vendors.map((vendor, idx) => {
-                    return <VendorTag key={idx} tag={vendor} />;
-                  })}
+                  <VendorTag tag={'Vendor A'} />
+                  <VendorTag tag={'Vendor B'} />
                 </div>
                 <div className="flex items-center">
                   <div className="relative h-5 w-4 ml-4 trash-selector cursor-pointer">
@@ -142,8 +133,8 @@ const ProductList = React.memo(() => {
       </div>
       <div className="mt-7 flex items-center justify-center">
         <Pagination
-          totalItems={products?.length - 1}
-          itemsPerPage={productssPerPage}
+          totalItems={productList?.length - 1}
+          itemsPerPage={productsPerPage}
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}
         />

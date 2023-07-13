@@ -67,7 +67,7 @@ function Sidebar() {
             'relative flex h-[42px] gap-[10px] px-10 items-center'
           }
         >
-          <img src="/images/icons/box.svg" alt="" className="w-[18px]" />
+          <img src="/images/icons/dashboard.svg" alt="" className="w-[18px]" />
           <p className="font-inter leading-6 text-mainText">Vendor List</p>
         </NavLink>
         <div className="line mx-10 mt-2"></div>
