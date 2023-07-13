@@ -105,7 +105,7 @@ function Routing() {
       ),
     },
     {
-      path: '/products-list/:productID',
+      path: '/products-list/:productCode',
       element: (
         <PrivateRoute>
           <DefaultLayout>

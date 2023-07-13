@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Modal from '~/components/Modal';
+import ModalAddVendor from '~/components/ModalAddVendor';
 import Pagination from '~/components/Pagination';
 import SearchBox from '~/components/SearchBox';
-import VendorTag from '~/components/VendorTag';
 import useMountTransition from '~/utils/useMountTransition';
 
 const VendorList = React.memo(() => {
@@ -125,6 +126,11 @@ const VendorList = React.memo(() => {
           setCurrentPage={setCurrentPage}
         />
       </div>
+      {(modalState || hasTransitionedIn) && (
+        <Modal handleClose={handleCloseModal} hasTransitionedIn={hasTransitionedIn} active={modalState}>
+          <ModalAddVendor handleClose={handleCloseModal} />
+        </Modal>
+      )}
     </div>
   );
 });
